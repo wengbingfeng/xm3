@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <title>社区便利店收银系统</title>
+    <style>
+    body{
+      text-align:center;
+      font-size:13px;
+    }
+    table{
+      margin:10px auto;
+    }
+    #result{
+      width:245px;
+      height:40px;
+    }
+    </style>
+  </head>
+  <body>
+    <h2>社区便利店收银系统</h2>
+    <input type="text" value="" id="result" disabled="disabled" />
+    <table border="1" width="250px">
+      <tr>
+        <th>名称</th>
+        <th>价格</th>
+        <th>添加</th>
+      </tr>
+      <tr>
+        <td>山东苹果</td>
+        <td>￥13.5/份</td>
+        <td><input type="button" value="+" onclick="addClick(13.5)" /></td>
+      </tr>
+      <tr>
+        <td>新奇士橙</td>
+        <td>￥12.5/份</td>
+        <td><input type="button" value="+" onclick="addClick(12.5)" /></td>
+      </tr>
+      <tr>
+        <td>麒麟瓜</td>
+        <td>￥3.0/份</td>
+        <td><input type="button" value="+" onclick="addClick(3.0)" /></td>
+      </tr>
+      <tr>
+        <td>国产红提</td>
+        <td>￥10.5/份</td>
+        <td><input type="button" value="+" onclick="addClick(10.5)" /></td>
+      </tr>
+      <tr>
+        <td>进口香蕉</td>
+        <td>￥4.5/份</td>
+        <td><input type="button" value="+" onclick="addClick(4.5)" /></td>
+      </tr>
+    </table>
+    <input class="btn" type="button" value="结 帐" id="btn_checkout" onclick="checkoutClick()" />
+    &nbsp;&nbsp;&nbsp;
+    <input class="btn" type="button" value="交易完成" onclick="reloadClick()" />
+    <script>
+    /*
+    功能：使用Javascript编写代码，点击“+”按钮触发，修改“文本框”值为购买的水果价格，多次点击，以“+”连接各价格。
+    参数：price 是添加水果的价格
+    返回：无
+    编写提示：
+    （1）获得“文本框result”的值
+    （2）判断“文本框result”的值是否为""
+    （3）若为""，则将当前price赋值给“文本框”
+    （4）若不为""，则先在“文本框”已有值后添加一个“+”，再添加此次价格price
+    */
+    function addClick(price) {
+      let r = document.querySelector('#result');
+	  if (r.value===''){
+		  r.value=price;
+	  }else{
+		  r.value= r.value + '+' + price;
+	  }
+    }
+	 
+    /*
+    功能：使用Javascript编写代码，点击“结账”按钮触发，计算所购水果的总金额，并将结果显示在“文本框result”里。
+    参数：无
+    返回：无
+    编写提示：
+    （1）获得“文本框result”的值
+    （2）若“文本框result”的值不为""，执行以下操作
+    （3）使用“+”分隔出“文本框result”值中的每一个价格，存放到数组对象中
+    （4）使用for循环遍历数组对象，将每个价格相加得到总金额
+    （5）设置“文本框result”值为“总金额:xxx”
+    （6）调用disabledBtn()函数禁用“结帐”按钮
+    （7）调用transparency()函数设置水果商品表格的透明度
+    */
+    function checkoutClick() {
+		let r = document.querySelector('#result');
+		let z = r.value.split("+");
+		let j = 0;
+		if(r.value != ''){
+			for(let i = 0; i<z.length; i++){
+				j += Number(z[i]);
+			}
+		}
+		r.value = '总金额:'+j;
+		disabledBtn()
+		transparency()
+    }
+    /*
+    功能：使用jQuery库编写代码，将“结帐”按钮设为禁用。
+    参数：无
+    返回：无
+    */
+    function disabledBtn() {
+      $('#btn_checkout').attr('disabled',"false");
+    }
+    /*
+    功能：使用jQuery库编写代码，将水果商品表格的透明度设为0.3，动画持续时间为1s。
+    参数：无
+    返回：无
+    编写提示：使用jQuery的动画函数实现。
+    */
+    function transparency() {
+     $("table").animate({"opacity":"0.3"},1000); 
+    }
+    /*
+    功能：点击“交易完成”按钮触发，重新加载当前页面，初始页面状态。
+    参数：无
+    返回：无
+    */
+    function reloadClick() {
+      location.reload();
+    }
+    </script>
+  </body>
+</html>
